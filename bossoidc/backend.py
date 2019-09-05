@@ -106,7 +106,8 @@ def get_user_by_id(request, userinfo):
     access_token = get_access_token(request)
     audience = get_token_audience(access_token)
     if not token_audience_is_valid(audience):
-        return None
+        # return None
+        print("Token_audience is not valid")
 
     UserModel = get_user_model()
     uid = userinfo['sub']
@@ -159,7 +160,8 @@ def get_user_by_id(request, userinfo):
     roles = get_roles(access_token)
     user.is_staff = 'admin' in roles or 'superuser' in roles
     user.is_superuser = 'superuser' in roles
-
+    if not user.is_staff:
+        return None
     LOAD_USER_ROLES_FUNCTION(user, roles)
     UPDATE_USER_DATA_FUNCTION(user, userinfo)
 
