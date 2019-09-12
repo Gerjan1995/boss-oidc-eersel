@@ -160,7 +160,7 @@ def get_user_by_id(request, userinfo):
     roles = get_roles(access_token)
     user.is_staff = 'admin' in roles or 'superuser' in roles
     user.is_superuser = 'superuser' in roles
-    if not user.is_staff:
+    if not 'appointed' in roles or user.is_staff
         return None
     LOAD_USER_ROLES_FUNCTION(user, roles)
     UPDATE_USER_DATA_FUNCTION(user, userinfo)
